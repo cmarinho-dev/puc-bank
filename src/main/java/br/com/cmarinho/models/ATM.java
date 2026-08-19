@@ -19,23 +19,25 @@ public class ATM {
     }
 
     public void printStatus() {
-        StringBuilder str = new StringBuilder("-~-~-~-~-~-~-~-~-~-~-~-~-~-" +
-                "\n* ATM STATUS\n" +
-                "-~-~-~-~-~-~-~-~-~-~-~-~-~-\n");
+        StringBuilder str = new StringBuilder("\n* ATM STATUS\n"
+            + "-~-~-~-~-~-~-\n");
+
+        StringBuilder values = new StringBuilder();
+        StringBuilder statuses = new StringBuilder();
+        StringBuilder quantities = new StringBuilder();
 
         for (CashStock stock : stocks.values()) {
-            str.append("""
-                    %s:
-                        status: %s
-                        quant: %d
-                    -~-~-~-~-~-~-~-~-~-~-~-~-~-
-                    """
-                    .formatted(
-                            stock.getTypeOfCash().toText(),
-                            stock.status(),
-                            stock.getCashStock().size()
-                    ));
+            values.append("%-20s | ".formatted("$%d".formatted(stock.getTypeOfCash().value())));
+            statuses.append("%-20s | ".formatted("status=" + stock.status()));
+            quantities.append("%-20s | ".formatted("quant=" + stock.getCashStock().size()));
         }
+
+        str.append(values)
+                .append("\n")
+                .append(statuses)
+                .append("\n")
+                .append(quantities)
+                .append("\n\n");
         System.out.println(str);
     }
 }
